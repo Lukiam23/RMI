@@ -1,19 +1,24 @@
 import java.rmi.Naming;
+import java.util.*;
 
 import java.rmi.RemoteException;
 
 public class Cliente {
 
-	public static void main (String args[]) {
+	public static void main (String args[]) 
+	{
 
 		try {
 
-
-			Hello obj = (Hello) Naming.lookup("//localhost/HelloServer");
-
-			String message = obj.sayHello();
-
-			System.out.println(message);
+			while(true)
+			{
+				Hello obj = (Hello) Naming.lookup("//localhost/HelloServer");
+				System.out.println("Coloque o texto a se enviado: ");
+				Scanner msg = new Scanner(System.in);
+				String texto =msg.nextLine();
+				obj.sayHello(texto);
+			}
+			
 
 		} catch (Exception e) {
 
