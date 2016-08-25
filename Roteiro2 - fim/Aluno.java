@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Aluno implements Serializable{
 	public String nome,n1, n2, n3, freq;
-	public static int codigo;
+	public int codigo;
 	public Aluno(String nome,int codigo,String n1,String n2,String n3,String freq)
 	{
 		this.nome = nome;
@@ -41,7 +41,7 @@ public class Aluno implements Serializable{
 	}
 	public String toString()
 	{
-		String result = "\nNome:  "+nome+"| Código: "+codigo+"| Nota 1:"+n1+"| Nota 2: "+n2+"| Nota 3: "+n3+"| Frequência: "+freq;
+		String result = "\nNome:  "+nome+"| CÃ³digo: "+codigo+"| Nota 1:"+n1+"| Nota 2: "+n2+"| Nota 3: "+n3+"| FrequÃªncia: "+freq;
 		return result;
 	}
 	public static void main(String args[])
@@ -51,7 +51,7 @@ public class Aluno implements Serializable{
 			try
 			{
 				Methods obj = (Methods) Naming.lookup("//localhost/AlunoServer");
-				System.out.println("Digite a sua escolha:\n1.Cadastrar Aluno\n2.Remover aluno\n3.Consutar Aluno\n4.Ver informações de todos os alunos\n");
+				System.out.println("Digite a sua escolha:\n1.Cadastrar Aluno\n2.Remover aluno\n3.Consutar Aluno\n4.Ver informaÃ§Ãµes de todos os alunos\n");
 				Scanner escolha = new Scanner(System.in);
 				int  esc = escolha.nextInt();
 				if(esc==1)
@@ -60,7 +60,7 @@ public class Aluno implements Serializable{
 						System.out.println("Coloque o seu nome: ");
 						Scanner scanNome = new Scanner(System.in);
 						String nome = scanNome.nextLine();
-						System.out.println("Coloque o seu código: ");
+						System.out.println("Coloque o seu cÃ³digo: ");
 						Scanner scanCod = new Scanner(System.in);
 						int cod = scanCod.nextInt();
 						System.out.println("Coloque a n1: ");
@@ -72,7 +72,7 @@ public class Aluno implements Serializable{
 						System.out.println("Coloque a n3: ");
 						Scanner scanN3 = new Scanner(System.in);
 						String n3 = scanN3.nextLine();
-						System.out.println("Coloque a frequência: ");
+						System.out.println("Coloque a frequÃªncia: ");
 						Scanner scanFreq = new Scanner(System.in);
 						String freq = scanFreq.nextLine();
 						obj.AdicionarAluno(nome, cod, n1, n2, n3, freq);
@@ -80,20 +80,20 @@ public class Aluno implements Serializable{
 				}
 				else if(esc==2)
 				{
-					System.out.println("Coloque o código do  aluno a ser removido:");
+					System.out.println("Coloque o cÃ³digo do  aluno a ser removido:");
 					Scanner scanner = new Scanner(System.in);
-					codigo = scanner.nextInt();
-					System.out.println(obj.RemoverAluno(codigo));
+					int cod = scanner.nextInt();
+					System.out.println(obj.RemoverAluno(cod));
 				}
 				else if(esc==3)
 				{
-					System.out.println("Coloque o código do aluno a ser consultado: ");
+					System.out.println("Coloque o cÃ³digo do aluno a ser consultado: ");
 					Scanner esc3 = new Scanner(System.in);
-					codigo = esc3.nextInt();
-					Aluno id = obj.ConsultarAluno(codigo);
+					int cod = esc3.nextInt();
+					Aluno id = obj.ConsultarAluno(cod);
 					if(id==null)
 					{
-						System.out.println("Código não cadastrado");
+						System.out.println("CÃ³digo nÃ£o cadastrado");
 					}
 					else
 					{
@@ -111,11 +111,11 @@ public class Aluno implements Serializable{
 				}
 				else
 				{
-					System.out.println("Operação inválida");
+					System.out.println("OperaÃ§Ã£o invÃ¡lida");
 				}
 			}
 			catch(Exception e) {
-				System.out.println("Erro de execução: " + e.getMessage());
+				System.out.println("Erro de execuÃ§Ã£o: " + e.getMessage());
 				e.printStackTrace();
 			}
 			
