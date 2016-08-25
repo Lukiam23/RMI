@@ -24,30 +24,42 @@ public class GestorDeAlunos extends UnicastRemoteObject implements Methods
 	{
 		i = 0;
 		Aluno aluno = null;
-		int posicao = lista.indexOf(aluno.codigo);
-		String resultado = "Aluno removido!\n";
-		if(posicao!=-1)
+		String str = "";
+		while(i<lista.size())
 		{
-			lista.remove(posicao);
-			return resultado;
+			if(lista.get(i).getCod()==codigo)
+			{
+				lista.remove(i);
+				str="Aluno encontrado e removido.";
+			}
+			i++;
 		}
-		else
-		{
-			resultado ="C�digo n�o encontrado.\n";
-			return resultado;
-		}
-		
-		
+		return str;		
 	}
 	public Aluno ConsultarAluno(int codigo) 
 	{
 		Aluno aluno = null;
-		int pos = lista.indexOf(aluno.codigo);
+		i=0;
+		while(i<lista.size())
+		{
+			System.out.println("O código do aluno é: "+lista.get(i).getCod());
+			System.out.println("O código dado é: "+codigo);
+			if(lista.get(i).getCod()==codigo)
+			{
+				System.out.println("O aluno foi encontrado");
+				aluno = lista.get(i);
+			}
+			i++;
+		}
 		return aluno;
 	}
 	public String Info()
 	{
 		String str = "";
+		if(lista.size()==0)
+		{
+			str="Não há alunos";
+		}
 		for(i =0; i<lista.size(); i++)
 		{
 			Aluno aluno = lista.get(i);
