@@ -7,7 +7,6 @@ public class Servidor extends UnicastRemoteObject implements Methods{
 
 	public static int contador;
 	public static int contadorBuffer =0;
-	public Hashtable<Cliente,String> buffer;
 	public Servidor() throws RemoteException {
 		super();
 		contador=0;
@@ -28,7 +27,7 @@ public class Servidor extends UnicastRemoteObject implements Methods{
 	public String listarSalas() 
 	{
 		int n = salas.size();
-		String str = "H· "+n+"salas livres.";
+		String str = "H√° "+n+"salas livres.";
 		return str;
 	}
 	public void adicionar(int nsala, Cliente cliente)
@@ -47,7 +46,7 @@ public class Servidor extends UnicastRemoteObject implements Methods{
 	public String listar(int nsala)
 	{
 		int i = 0;
-		String str = "Os seguintes clientes est„o na sala "+nsala;
+		String str = "Os seguintes clientes est√£o na sala "+nsala;
 		while(i<salas.size())
 		{
 			str = str + salas.get(i).toString();
@@ -61,21 +60,11 @@ public class Servidor extends UnicastRemoteObject implements Methods{
 		while(i<salas.get(nsala).sizeSala())
 		{
 			Cliente obj = salas.get(nsala).getCliente(i);
-			buffer.put(obj, msg);
+			obj.mensagem = msg;
+			i++;
 		}
 	}
-	public String getMensagem()
-	{
-		if(contadorBuffer!=buffer.size())
-		{
-			contadorBuffer=buffer.size();
-			return  buffer.get(buffer.size());			
-		}
-		else
-		{
-			return null;
-		}
-	}
+
 	public static void main(String args[]) 
 	{
 		try 
