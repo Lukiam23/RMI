@@ -16,5 +16,4 @@ public interface Methods  extends Remote
 
 	void encaminhaMensagem (int nsala, String msg, String nome)throws RemoteException;
 	
-	String getMensagem() throws RemoteException;
 }
