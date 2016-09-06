@@ -5,6 +5,7 @@ import java.util.*;
 public class Cliente implements Serializable
 {
 	public String nome;
+	public int nsala;
 	public String mensagem="";
 	public Cliente()
 	{
@@ -22,7 +23,7 @@ public class Cliente implements Serializable
 	{
 		mensagem = msg;
 	}
-	
+
 	public static void main (String args[]) 
 	{
 		try 
@@ -32,85 +33,83 @@ public class Cliente implements Serializable
 			System.out.print("Coloque o nome: ");
 			Scanner catchname = new Scanner(System.in);
 			String nome = catchname.nextLine();
-			
-			
-			
+
+
+
 			Cliente cliente = new Cliente();
 			cliente.nome = nome;
-			
+
 			Thread checking = new Thread()
 			{
 				public void run()
 				{
 					while(true)
 					{
-						
-						try 
+						try
 						{
-							if(obj.getMensagem()!=null)
+							if(cliente.mensagem!="")
 							{
-								System.out.println(obj.getMensagem());
+								System.out.println(cliente.mensagem);
+								cliente.mensagem = "";
 							}
 							Thread.sleep(10);
-						} 
-						catch (InterruptedException e) 
+						}
+						catch(Exception e)
 						{
-							e.printStackTrace();
-						} catch (RemoteException e) {
-							// TODO Auto-generated catch block
+							System.out.println("Erro na thread cheking: "+e);
 							e.printStackTrace();
 						}
-					}		
-					
+					}
 				}
 			};
-			
-			Thread sender = new Thread()
+			Thread sending = new Thread()
 			{
 				public void run()
 				{
 					while(true)
 					{
-						System.out.println(cliente.nome+": ");
-						Scanner catchmsg = new Scanner(System.in);
-					
-						String texto =catchmsg.nextLine();
-						try {
-							obj.encaminhaMensagem(0, texto,cliente.nome);
+						try
+						{
+							System.out.println(cliente.getNome()+" : ");
+							Scanner scan = new Scanner(System.in);
+							String msg = scan.nextLine();
+							obj.encaminhaMensagem(cliente.nsala, msg, cliente.mensagem);
 							Thread.sleep(10);
-						} catch (RemoteException | InterruptedException e) {
+						}
+						catch(Exception e)
+						{
+							System.out.println("Erro na thread cheking: "+e);
 							e.printStackTrace();
 						}
-					}					
+					}
 				}
 			};
-			
-			checking.start();
-			sender.start();
-			
-			System.out.println("Escolha:\n1.Você gostaria de criar uma sala.\n2.Entrar em uma já existente.");
+
+
+
+			System.out.println("Escolha:\n1.VocÃª gostaria de criar uma sala.\n2.Entrar em uma jÃ¡ existente.");
 			Scanner catchchoice = new Scanner(System.in);
 			int choice = catchchoice.nextInt();	
 			if(choice==1)
 			{
 				Sala sala = obj.criarSala();
-				obj.adicionar(0, cliente);
+				cliente.nsala = sala.getId();
+				obj.adicionar(cliente.nsala, cliente);
 			}
 			else if(choice==2)
 			{
-				System.out.println("Digite o número da sala: ");
+				System.out.println("Digite o nÃºmero da sala: ");
 				Scanner catchchoice2 = new Scanner(System.in);
-				nsala = catchchoice2.nextInt();
+				cliente.nsala = catchchoice2.nextInt();
 				obj.adicionar(nsala, cliente);
 			}
-
 			else
 			{
-				System.out.println("Não há essa escolha");
+				System.out.println("NÃ£o hÃ¡ essa escolha");
 			}
+			checking.start();
+			sending.start();
 			
-
-
 		} catch (Exception e) {
 
 			System.out.println("Erro no Cliente: " + e.getMessage());
@@ -121,7 +120,7 @@ public class Cliente implements Serializable
 
 
 	}
-	
+
 
 
 }
