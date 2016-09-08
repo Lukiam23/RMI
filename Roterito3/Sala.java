@@ -38,7 +38,7 @@ public class Sala implements Serializable{
 		String str = "";
 		while(c<clientes.size())
 		{
-			str = str+"O cliente: "+clientes.get(c).getNome()+"está na sala:"+numero;
+			str = str+"O cliente: "+clientes.get(c).getNome()+"estÃ¡ na sala:"+numero;
 		}
 		return str;
 	}
