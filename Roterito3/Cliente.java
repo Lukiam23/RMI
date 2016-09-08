@@ -52,8 +52,12 @@ public class Cliente implements Serializable
 							Mensagem mens = obj.getMensagem();
 							if(mens.getId()>id && mens.getNsala()==cliente.nsala)
 							{
-								System.out.println(mens.getMsg());
-								id=mens.getId();
+								if(!mens.getNome().equals(cliente.getNome()))
+								{
+									System.out.println(mens.getMsg());
+									id=mens.getId();
+								}
+
 							}
 							Thread.sleep(10);
 						}
@@ -73,7 +77,7 @@ public class Cliente implements Serializable
 					{
 						try
 						{
-							System.out.println(cliente.getNome()+" : ");
+							System.out.print(cliente.getNome()+" : ");
 							Scanner scan = new Scanner(System.in);
 							String msg = scan.nextLine();
 							obj.encaminhaMensagem(cliente.nsala, msg, cliente);
@@ -90,7 +94,7 @@ public class Cliente implements Serializable
 
 
 
-			System.out.println("Escolha:\n1.Você gostaria de criar uma sala.\n2.Entrar em uma já existente.");
+			System.out.println("Escolha:\n1.VocÃª gostaria de criar uma sala.\n2.Entrar em uma jÃ¡ existente.");
 			Scanner catchchoice = new Scanner(System.in);
 			int choice = catchchoice.nextInt();	
 			if(choice==1)
@@ -98,22 +102,22 @@ public class Cliente implements Serializable
 				Sala sala = obj.criarSala();
 				cliente.nsala = sala.getId();
 				obj.adicionar(cliente.nsala, cliente);
-				System.out.println("O número da sua sala e: "+sala.getId());
+				System.out.println("O nÃºmero da sua sala e: "+sala.getId());
 			}
 			else if(choice==2)
 			{
-				System.out.println("Digite o número da sala: ");
+				System.out.println("Digite o nÃºmero da sala: ");
 				Scanner catchchoice2 = new Scanner(System.in);
 				cliente.nsala = catchchoice2.nextInt();
 				obj.adicionar(nsala, cliente);
 			}
 			else
 			{
-				System.out.println("Não há essa escolha");
+				System.out.println("NÃ£o hÃ¡ essa escolha");
 			}
 			checking.start();
 			sending.start();
-			
+
 		} catch (Exception e) {
 
 			System.out.println("Erro no Cliente: " + e.getMessage());
