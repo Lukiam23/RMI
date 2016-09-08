@@ -33,7 +33,7 @@ public class Servidor extends UnicastRemoteObject implements Methods{
 	public String listarSalas() 
 	{
 		int n = salas.size();
-		String str = "H· "+n+"salas livres.";
+		String str = "H√° "+n+"salas livres.";
 		return str;
 	}
 	public void adicionar(int nsala, Cliente cliente)
@@ -52,7 +52,7 @@ public class Servidor extends UnicastRemoteObject implements Methods{
 	public String listar(int nsala)
 	{
 		int i = 0;
-		String str = "Os seguintes clientes est„o na sala "+nsala;
+		String str = "Os seguintes clientes est√£o na sala "+nsala;
 		while(i<salas.size())
 		{
 			str = str + salas.get(i).toString();
@@ -66,7 +66,7 @@ public class Servidor extends UnicastRemoteObject implements Methods{
 		while(i<salas.get(nsala).sizeSala())
 		{
 			Cliente obj = salas.get(nsala).getCliente(i);
-			Mensagem dados = new Mensagem(id,cliente.getNome()+" : "+msg,cliente.nsala,cliente.nome);
+			Mensagem dados = new Mensagem(id,"\n"+cliente.getNome()+": "+msg,cliente.nsala,cliente.getNome());
 			mensagens.add(dados);
 			id++;
 			i++;
