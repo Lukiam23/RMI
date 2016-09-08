@@ -25,6 +25,6 @@ public class Mensagem implements Serializable{
 	}
 	public String getNome()
 	{
-		return nome;
+		return this.nome;
 	}
 }
