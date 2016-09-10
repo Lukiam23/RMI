@@ -17,16 +17,24 @@ public class Sala implements Serializable{
 		Cliente cliente = clientes.get(n);
 		return cliente;
 	}
+	public ArrayList<Cliente> listaDeClientes()
+	{
+		return this.clientes;
+	}
 	public void remove(String nome)
 	{
 		for(int i = 0; i<clientes.size();i++)
 		{
-			if(clientes.get(i).getNome()==nome)
+			if(clientes.get(i).getNome().equals(nome))
 			{
-				clientes.remove(i);
+				this.clientes.remove(i);
 			}
 		}
 		
+	}
+	public void remove(Cliente objeto)
+	{
+		clientes.remove(objeto);		
 	}
 	public int sizeSala()
 	{
