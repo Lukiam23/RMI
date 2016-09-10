@@ -16,14 +16,14 @@ public class Servidor extends UnicastRemoteObject implements Methods{
 	ArrayList <Sala> salas = new ArrayList<Sala>();
 	Sala padrao = new Sala(0);
 	static ArrayList <Mensagem> mensagens = new ArrayList<Mensagem>();
-	
-	
+
+
 	public Sala criarSala() throws RemoteException 
 	{
 		Sala sala = new Sala(contador);	
 		salas.add(sala);
 		contador++;
-		
+
 		return sala;
 	}
 	public void removerSala(int sala)
@@ -40,42 +40,48 @@ public class Servidor extends UnicastRemoteObject implements Methods{
 	{
 		Sala obj = salas.get(nsala);
 		obj.add(cliente);
-		
+
 	}
 	public void remover(int nsala,String nome)
 	{
-		Sala obj = salas.get(nsala);
-		obj.remove(nome);
+		Sala sala = salas.get(nsala);
+		sala.remove(nome);	
 	}
 
-	@Override
 	public String listar(int nsala)
 	{
 		int i = 0;
-		String str = "Os seguintes clientes estão na sala "+nsala;
-		while(i<salas.size())
+		String str = "Os seguintes clientes estão na sala: "+nsala;
+		while(i<salas.get(nsala).sizeSala())
 		{
-			str = str + salas.get(i).toString();
+			str = str + salas.get(nsala).getCliente(i).toString();
+			i++;
 		}
 		return str;
 	}
 
 	public void encaminhaMensagem(int nsala, String msg,Cliente cliente)
 	{
-		int i = 0;
-		while(i<salas.get(nsala).sizeSala())
-		{
-			Cliente obj = salas.get(nsala).getCliente(i);
-			Mensagem dados = new Mensagem(id,"\n"+cliente.getNome()+": "+msg,cliente.nsala,cliente.getNome());
-			mensagens.add(dados);
-			id++;
-			i++;
-		}
+		Mensagem dados = new Mensagem(id,msg,cliente.nsala,cliente.getNome(),"all");
+		mensagens.add(dados);
+		id++;
 	}
-	
-	public Mensagem getMensagem()
+
+	public void encaminhaMensagem (int nsala, String msg, Cliente cliente,String nomedestino)
 	{
-		return mensagens.get(mensagens.size()-1);
+		Mensagem dados = new Mensagem(id,msg,cliente.nsala,cliente.getNome(),nomedestino);
+		mensagens.add(dados);
+		id++;
+	}
+
+	public ArrayList<Mensagem> getMensagem(int idCliente)
+	{
+		ArrayList <Mensagem> retorno = new ArrayList<Mensagem>();
+		for(int i =id; i<mensagens.size(); i++)
+		{
+			retorno.add(mensagens.get(i));
+		}
+		return retorno;
 	}
 
 	public static void main(String args[]) 
@@ -83,7 +89,7 @@ public class Servidor extends UnicastRemoteObject implements Methods{
 		try 
 		{
 			Servidor obj = new Servidor();
-			Mensagem pad = new Mensagem(0,"Seja bem-vindo",0,"Servidor");
+			Mensagem pad = new Mensagem(0,"Seja bem-vindo",0,"Servidor",null);
 			mensagens.add(pad);
 			Naming.rebind("//localhost/Chat", obj);
 			System.out.println("Servidor rodando...");
