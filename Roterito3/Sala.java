@@ -54,4 +54,16 @@ public class Sala implements Serializable{
 	{
 		return this.numero;
 	}
+	public boolean contains(String cliente)
+	{
+		boolean retorno =false;
+		for(Cliente c:clientes)
+		{
+			if(c.getNome().equals(cliente))
+			{
+				retorno=true;
+			}
+		}
+		return retorno;
+	}
 }
