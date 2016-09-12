@@ -33,7 +33,7 @@ public class Servidor extends UnicastRemoteObject implements Methods{
 	public String listarSalas() 
 	{
 		int n = salas.size();
-		String str = "Há "+n+"salas livres.";
+		String str = "Há "+n+" sala(s) livre(s).";
 		return str;
 	}
 	public void adicionar(int nsala, Cliente cliente)
@@ -45,7 +45,7 @@ public class Servidor extends UnicastRemoteObject implements Methods{
 	public void remover(int nsala,String nome)
 	{
 		Sala sala = salas.get(nsala);
-		sala.remove(nome);	
+		sala.remove(nome);
 	}
 
 	public String listar(int nsala)
@@ -62,26 +62,39 @@ public class Servidor extends UnicastRemoteObject implements Methods{
 
 	public void encaminhaMensagem(int nsala, String msg,Cliente cliente)
 	{
-		Mensagem dados = new Mensagem(id,msg,cliente.nsala,cliente.getNome(),"all");
-		mensagens.add(dados);
-		id++;
+		if(salas.get(nsala).contains(cliente.getNome()))
+		{
+			Mensagem dados = new Mensagem(id,msg,cliente.nsala,cliente.getNome(),"all");
+			mensagens.add(dados);
+			id++;
+		}
 	}
 
 	public void encaminhaMensagem (int nsala, String msg, Cliente cliente,String nomedestino)
 	{
-		Mensagem dados = new Mensagem(id,msg,cliente.nsala,cliente.getNome(),nomedestino);
-		mensagens.add(dados);
-		id++;
+		if(salas.get(nsala).contains(cliente.getNome()))
+		{
+			Mensagem dados = new Mensagem(id,msg,cliente.nsala,cliente.getNome(),nomedestino);
+			mensagens.add(dados);
+			id++;
+		}
 	}
 
-	public ArrayList<Mensagem> getMensagem(int idCliente)
+	public ArrayList<Mensagem> getMensagem(Cliente cliente)
 	{
-		ArrayList <Mensagem> retorno = new ArrayList<Mensagem>();
-		for(int i =id; i<mensagens.size(); i++)
+		if(salas.get(cliente.getNsala()).contains(cliente.getNome()))
 		{
-			retorno.add(mensagens.get(i));
+			ArrayList <Mensagem> retorno = new ArrayList<Mensagem>();
+			for(int i =id; i<mensagens.size(); i++)
+			{
+				retorno.add(mensagens.get(i));
+			}
+			return retorno;
 		}
-		return retorno;
+		else
+		{
+			return null;
+		}
 	}
 
 	public static void main(String args[]) 
