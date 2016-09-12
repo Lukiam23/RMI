@@ -81,7 +81,7 @@ public class Cliente implements Serializable
 						boolean fim = false;
 						while(fim==false)
 						{
-							ArrayList<Mensagem> lista = obj.getMensagem(cliente.getID());//Pega um objeto mensagem, a mensagem tem todas as informaçõe que eu necessito
+							ArrayList<Mensagem> lista = obj.getMensagem(cliente);//Pega um objeto mensagem, a mensagem tem todas as informaçõe que eu necessito
 
 							for(Mensagem mensagem:lista)
 							{
@@ -114,8 +114,7 @@ public class Cliente implements Serializable
 					}
 					catch(Exception e)
 					{
-						System.out.println("Erro na thread cheking: "+e);
-						e.printStackTrace();
+						System.out.println("Ou você foi removido da sala ou a sala foi deletada");
 					}
 
 				}
@@ -167,18 +166,10 @@ public class Cliente implements Serializable
 					int choice = 0;
 					while(true)
 					{
-						System.out.println("Escolha:\n1.Você gostaria de criar uma sala.\n2.Entrar em uma já existente.");
+						System.out.println("Escolha:\n1.Entrar em uma já existente.");
 						Scanner catchchoice = new Scanner(System.in);
 						choice = catchchoice.nextInt();	
 						if(choice==1)
-						{
-							Sala sala = obj.criarSala();
-							cliente.nsala = sala.getId();
-							obj.adicionar(cliente.nsala, cliente);
-							System.out.println("O número da sua sala e: "+sala.getId());
-							break;
-						}
-						else if(choice==2)
 						{
 							System.out.println("Digite o número da sala: ");
 							Scanner catchchoice2 = new Scanner(System.in);
